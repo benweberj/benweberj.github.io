@@ -3,7 +3,7 @@ let canvas;
 let birds;
 
 let particleCount;
-let limit;
+let minDist;
 let attractionForce;
 let repelMultiplier;
 let maxSpeed;
@@ -35,16 +35,15 @@ function start() {
     }
 
     particleCount = int($('input[name="particle-count"]').val());
-    limit = int($('input[name="range"]').val());
+    minDist = int($('input[name="min-dist"]').val());
     attractionForce = parseFloat($('input[name="attraction"]').val());
-    minSize = parseFloat($('input[name="min-size"]').val())
-    maxSize = parseFloat($('input[name="max-size"]').val())
     repelMultiplier = parseFloat($('input[name="repel"]').val());
     maxSpeed = parseFloat($('input[name="max-speed"]').val());
+    console.log(maxSpeed);
 
     particles = [];
     for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle(maxSpeed, minSize, maxSize));
+        particles.push(new Particle(maxSpeed));
     }
 
 }
@@ -60,6 +59,7 @@ function draw() {
             mouse = createVector(mouseX, mouseY);
             if (particle !== other) {
                 let mouseDist = other.pos.copy().dist(mouse);
+                let limit = 1500;
                 if (mouseDist < limit) {
                     let dir = mouse.copy().sub(other.pos);
                     if (mouseIsPressed) {
@@ -70,7 +70,7 @@ function draw() {
 
                 let dist = particle.pos.dist(other.pos);
 
-                if (dist < 400) {
+                if (dist < minDist) {
                     let str = Math.pow(15 / dist, 2);
                     str = constrain(str, 0, 2);
                     stroke(255);

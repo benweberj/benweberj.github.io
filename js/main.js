@@ -1,55 +1,165 @@
-(function() {
+(function () {
     'use strict';
 
-    let xs = 575;
-    let sm = 767;
-    let md = 991;
-    let lg = 1200;
+    let real;
+    let vector;
+    let currentTheme;
+    // let description;
 
-    let green = '#60b389';
-    let orange = '#ef8354';
-    let blue = '#3189c4';
-    let red = '#a85751';
+    $(document).ready(() => {
+        real = $('#real');
+        vector = $('#vector');
+        currentTheme = '#60b389';
 
-    $(document).ready(init);
-
-    function init() {
-        $('.navbar-toggler').click(function () {
-            $('.navbar').toggleClass('pulse');
+        overlay(real, vector);
+        
+        // hides the vector pic and shows the real pic
+        vector.click(() => {
+            vector.css('opacity', 0);
+            real.css('opacity', 1);
+            setTimeout(() => {
+                vector.css('display', 'none');
+                real.css('display', 'block');
+            }, 500);
         });
 
+        // hides the real pic and shows the vector pic
+        real.click(() => {
+            vector.css('display', 'block');
+            setTimeout(() => vector.css('opacity', 1), 0);
+        });
 
-        // $('.alert').click(function () {
-        //     $(this).addClass('pulse');
+        // to handle theme color change
+        let colors = {
+            'black': '#555',
+            'red': '#de5460',
+            'blue': '#4185f2',
+            'green': '#60b389',
+            'purple': '#8d64de',
+            'orange': '#eb8e54',
+            'yellow': '#f2c23f'
+        }
+
+        let buttons = $('#theme div');
+        buttons.mousedown(function() {
+            $(buttons).css('transform', '');
+            $(this).css('transform', 'scale(.5)');
+
+            let color = colors[$(this).attr('class')]
+            currentTheme = color;
+            $('.me#vector').css('background-color', color);
+            $('h1').css('color', color);
+        });
+
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 300) {
+                $('#theme').css('opacity', 0);
+            };
+            if ($(this).scrollTop() <= 300) {
+                $('#theme').css('opacity', 1);
+            };
+        });
+
+        let icons = $('#social img');
+        icons.mouseover(function() {
+            $(this).css('border', `10px solid ${currentTheme}`);
+        });
+        icons.mouseleave(function () {
+            $(this).css('border', 'none');
+        });
+
+        // sometimes the profile pic and project titles get misaligned. Think it has
+        // something to do with loading order inconsistency, but this should be a quick fix
+        let alignmentCheck = setInterval(() => {
+            centerDescriptions();
+            overlay(real, vector);
+        }, 500);
+
+        // buttons.mouseleave(function() {
+        //     $(this).css('border', '0px dashed white');
         // });
 
-        let i = 0;
-        $('.image-wrap').each(function() {
-            let translation = 30;
-            let w = $(window).width();
-            translation *= w / 1500;
+        centerDescriptions();
+        entryAnimation();
+        
+        let e = $('.entry');
+        e.css('height', e.width());
+    });
 
-            if (i % 2 === 1) {
-                translation *= -1;
-            }
-            translation = `${translation}px`;
-            
-            $(this).mouseover(function() {
-                $(this).next().css('transform', `translateX(${translation}) scale(1.05)`);
+    // positions @top on top of @bottom
+    function overlay(bottom, top) {
+        let l = bottom.offset().left;
+        let t = bottom.offset().top;
+
+        top.css({
+            position: 'absolute',
+            left: l,
+            top: t
+        });
+    }
+
+    
+    function centerDescriptions() {
+        let descriptions = $('.description');
+        descriptions.each(function () {
+            let prevH = this.previousElementSibling.offsetHeight;
+            let thisH = this.offsetHeight;
+            this.style.marginTop = `${(prevH - thisH) / 2}px`;
+            // let prevH = $(this).prev().offset().top;
+            // let thisH = $(this).offset().top;
+            // $(this).css('margin-top', `${(prevH - thisH) / 2}px`);
+        });
+
+
+    }
+
+    function entryAnimation() {
+        $('.entry').hover(function () {
+            let d = $(this).children('.description');
+            d.children('p').css({
+                opacity: 1,
+                height: '100px'
             });
-            $(this).mouseout(function () {
-                $(this).next().css('transform', 'translateX(0px) scale(1.0)');
+            d.children('div').css({
+                opacity: 1,
+                height: '100%'
             });
-            i++;
+            centerDescriptions();
         });
 
-        $('#social img').hover(function () {
-            $('#platform').text(this.getAttribute('data-platform'));
-            $('#platform').css('opacity', 1);
+        $('.design-entry').hover(function () {
+            let d = $(this).children('.description');
+            d.css('opacity', 1);
+            centerDescriptions();
         });
 
-        $('#social').mouseleave(function () {
-            $('#platform').css('opacity', 0);
+        $('.entry').mouseleave(function () {
+            let d = $(this).children('.description');
+            d.children('p').css({
+                opacity: 0,
+                height: 0
+            });
+            d.children('div').css({
+                opacity: 0,
+                height: 0
+            });
+            centerDescriptions();
         });
+
+        $('.design-entry').mouseleave(function () {
+            let d = $(this).children('.description');
+            d.css('opacity', 0);
+            // d.css('border', '1px solid red');
+            centerDescriptions();
+        });
+    }
+
+    window.onresize = () => {
+        overlay(real, vector);
+        centerDescriptions();
+
+        // for some reason, .entry's height is 4px more than its width
+        let e = $('.entry');
+        e.css('height', e.width());
     }
 })();

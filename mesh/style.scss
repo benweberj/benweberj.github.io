@@ -41,13 +41,9 @@
             }
         }
 
-        &[name="min-size"] {
-            margin-right: 5px;
-        }
+        &[type='radio'] { margin-right: 0px }
 
-        &[name="max-size"] {
-            margin-left: 5px;
-        }
+        &[name='color'] { padding: 0 }
     }
 }
 

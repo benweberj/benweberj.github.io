@@ -1,10 +1,7 @@
 class Particle {
-    constructor(maxSpeed, min, max) {
-        this.min = min;
-        this.max = max;
+    constructor(maxSpeed) {
         this.respawn();
         this.pos = createVector(random(-100, width+100), random(-100, height+100));
-        this.maxSpeed = maxSpeed;
     }
 
     move() {
@@ -21,7 +18,7 @@ class Particle {
     applyForce(force) {
         let dist = force.mag();
         let strength = .3 / Math.pow(dist, 2);
-        strength = constrain(strength, 0, this.maxSpeed / 10000);
+        strength = constrain(strength, 0, maxSpeed / 10000);
         force.setMag(strength);
         this.vel.add(force);
     }
@@ -44,6 +41,6 @@ class Particle {
         let rate = random(.2, .4);
         this.pos = createVector(random(-100, width + 100), -100);
         this.vel = createVector(random(-rate, rate), random(-rate + rate, rate));
-        this.size = random(this.min, this.max);
+        this.size = random(1, 10);
     }
 }

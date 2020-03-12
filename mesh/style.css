@@ -51,12 +51,12 @@
           transform: scale(1.1);
 }
 
-#controls div input[name="min-size"] {
-  margin-right: 5px;
+#controls div input[type='radio'] {
+  margin-right: 0px;
 }
 
-#controls div input[name="max-size"] {
-  margin-left: 5px;
+#controls div input[name='color'] {
+  padding: 0;
 }
 
 #controls-toggle {
