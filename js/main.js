@@ -49,6 +49,11 @@
             currentTheme = color;
             $('.me#vector').css('background-color', color);
             $('h1').css('color', color);
+            let a = hexToRgb(color);
+            let c = `rgba(${a.r}, ${a.g}, ${a.b}, .1)`;
+            
+            $('body').css('background-color', c);
+            
         });
 
         $(window).scroll(function () {
@@ -70,10 +75,10 @@
 
         // sometimes the profile pic and project titles get misaligned. Think it has
         // something to do with loading order inconsistency, but this should be a quick fix
-        let alignmentCheck = setInterval(() => {
+        let alignmentCheck = setTimeout(() => {
             centerDescriptions();
-            overlay(real, vector);
-        }, 500);
+            // overlay(real, vector);
+        }, 3000);
 
         // buttons.mouseleave(function() {
         //     $(this).css('border', '0px dashed white');
@@ -85,6 +90,15 @@
         let e = $('.entry');
         e.css('height', e.width());
     });
+
+    function hexToRgb(hex) {
+        let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    }
 
     // positions @top on top of @bottom
     function overlay(bottom, top) {
