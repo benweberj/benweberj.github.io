@@ -22,13 +22,15 @@ const SketchInfo = styled.div`
   height: 0;
   transition: all .5s ease;
   margin-bottom: 1rem;
+  > * { margin: 0 }
+  #separator {
+    margin-left: 15px;
+  }
 
   &.visible {
     opacity: 1;
     height: 80px;
   }
-
-  h2 { margin: 0 10px 0 0 }
 `
 const SketchPreview = styled.div`
   width: 100%;
@@ -101,10 +103,9 @@ export default class Sketches extends React.Component {
         </Sketches_>
 
         <SketchInfo id='sketchInfo'>
-          <Text type='h2' id='sketchName'>Particle Mesh</Text>
-          <Text type='h2'>|</Text>
-          {/* <Text type='p' className='sketchDescription'>$Sketch_description</Text> */}
-          <Text type='p' className='sketchDescription'>This thing will make you do things and it is also a thing itself.</Text>
+          <Text type='h2' id='sketchName'>$Sketch_name</Text>
+          <Text type='h2' id='separator'>|</Text>
+          <Text type='p' id='sketchDescription'>$Sketch_description</Text>
         </SketchInfo>
 
         <SketchPreview id='sketchPreview'>
