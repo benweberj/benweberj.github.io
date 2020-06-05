@@ -1,0 +1,94 @@
+export default function sketch(p) {
+  let canvas
+  let nodes = []
+  let maxDist = 200
+  let nodeCount = 50
+
+  p.setup = () => {
+    canvas = p.createCanvas(p.windowWidth, p.windowHeight)
+    p.background('#0d1e35')
+
+    for (let i = 0; i < nodeCount; i++) {
+      nodes.push(new Node(p, p.createVector(p.random(p.width), p.random(p.height)), maxDist))
+    }
+  }
+
+  p.draw = () => {
+    p.clear()
+    p.background('#0d1e35')
+    nodes.forEach(node => {
+      node.update()
+
+      let nearbyNodes = []
+      nodes.forEach(other => {
+        if (other !== node && node.pos.dist(other.pos) <= maxDist) {
+          nearbyNodes.push(other)
+        }
+      })
+      node.neighbors = nearbyNodes
+
+      let mouse = p.createVector(p.mouseX, p.mouseY)
+      // if (mouse.dist(node.pos) <= maxDist) {
+        let dirToMouse = mouse.sub(node.pos)
+        let vector = dirToMouse.mult(4 / Math.pow(dirToMouse.mag(), 2))
+        node.vel.add(vector)
+      // }
+    })
+  }
+
+  p.myCustomRedrawAccordingToNewPropsHandler = (newProps) => {
+    if (canvas) {
+      p.fill(newProps.color)
+    }
+  }
+}
+
+class Node {
+
+  constructor(p, origin, maxDist) {
+    this.p = p
+    this.maxDist = maxDist
+    this.neighbors = []
+    this.r = p.random(3, 10)
+    this.rate = p.random(.5, 3)
+    this.respawn()
+    this.pos = origin
+  }
+
+  respawn() {
+    this.pos = this.p.createVector(this.p.random(this.p.width), this.p.random(-300, -50))
+    this.vel = this.p.createVector(this.p.random(-this.rate, this.rate), this.p.random(this.rate))
+  }
+
+  update() {
+    this.pos.add(this.vel)
+
+    this.interract(this.neighbors)
+
+    // draw
+    this.p.stroke('#fff')
+    this.p.strokeWeight(this.r)
+    this.p.point(this.pos.x, this.pos.y)
+
+    this.checkBounds()
+  }
+
+  interract(neighbors) {
+    neighbors.forEach(other => {
+      this.p.strokeWeight(this.mapRange(this.pos.dist(other.pos), 0, this.maxDist+5, 1, 0))
+      this.p.stroke('#fff')
+      // this.p.line(this.pos.x, this.pos.y, other.pos.x, other.pos.y)
+
+      let forceToThis = this.pos.copy().sub(other.pos).mult(.0001)
+      other.vel.add(forceToThis)
+    })
+  }
+
+  mapRange(num, inMin, inMax, outMin, outMax) {
+    return (num - inMin) * (outMax - outMin) / (inMax - inMin) + outMin
+  }
+
+  checkBounds() {
+
+  }
+}
