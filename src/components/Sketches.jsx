@@ -11,9 +11,23 @@ const Sketches_ = styled.div`
 `
 const Sketch = styled.div`
   height: 200px;
-  background: #111;
+  background: ${props => props.theme.complement};
+  border-radius: .25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 10;
+  
 `
+const Icon = styled.div`
+  /* content: '/img/sketches/${props => props.name}-${props => props.theme.mode === 'dark' ? 'b' : 'w'}.png'; */
+  width: 100px;
+  border: 1px solid red;
+  height: 100px;
+  background-image: url('/img/sketches/${props => props.name}-${props => props.theme.mode === 'dark' ? 'b' : 'w'}.png');
+`
+/* src={`${ icon }-${ props.theme.mode === 'dark' ? 'w' : 'b' }`} */
+
 const SketchInfo = styled.div`
   display: flex;
   align-items: flex-end;
@@ -57,12 +71,18 @@ const SketchPreview = styled.div`
     }
   }
 `
+// import particleMesh from './particleMesh'
+// import particleMesh from './particleMesh'
+// import particleMesh from './particleMesh'
+// import particleMesh from './particleMesh'
+// import particleMesh from './particleMesh'
 
 const sketchData = [
-  {},
-  {},
-  {},
-  {},
+  { name: 'Particle Mesh', sketch: '', icon: 'nodes', description: '...' },
+  { name: 'Lightning', sketch: '', icon: 'lightning', description: '...' },
+  { name: 'Raining Katakana', sketch: '', icon: 'katakana', description: '..' },
+  { name: 'Orbit?', sketch: '', icon: 'orbit', description: '...' },
+  { name: 'Light Speed', sketch: '', icon: 'starfield', description: '...' }
 ]
 
 export default class Sketches extends React.Component {
@@ -95,7 +115,7 @@ export default class Sketches extends React.Component {
           {sketchData.map((sketch, i) => {
             return (
               <Sketch key={i} onClick={() => this.showSketch(i)}>
-
+                <Icon name={sketch.icon} />
               </Sketch>
             )
           })}
