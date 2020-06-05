@@ -39,7 +39,7 @@ body {
     margin-bottom: 5em;
 }
 
-.black { background-color: #222 !important}
+.black { background-color: #555555 !important}
 .red { background-color: #de5460 !important }
 .blue { background-color: #4185f2 !important }
 .green { background-color: #60b389 !important }
@@ -113,16 +113,21 @@ p {
     
     &#real {
         background-image: url('../img/real.png');
+        opacity: 0;
         margin: $section-spacing auto 0 auto;
-
         &:active { transform: rotate(5deg) }
     }
 
     &#vector {
-        background-image: url('../img/vec-t.png');
+        background-image: url('../img/vec-t2.png');
         background-color: $primary;
         border-radius: 50%;
         // transition: all .5s ease;
+        &:hover {
+            cursor: pointer;
+            animation: pulse2 1s ease;
+        }
+
 
         &:active { transform: rotate(-5deg) }
     }
@@ -337,6 +342,11 @@ p {
 // }
 
 @keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba($primary, .25) }
-  100% { box-shadow: 0 0 0 60px rgba($primary, 0) }
+  0% { box-shadow: 0 0 0 0 rgba(#000, .15) }
+  100% { box-shadow: 0 0 0 60px rgba(#000, 0) }
+}
+
+@keyframes pulse2 {
+  0% { box-shadow: 0 0 0 0 rgba(#000, .05) }
+  100% { box-shadow: 0 0 0 60px rgba(#000, 0) }
 }

@@ -31,7 +31,7 @@
 
         // to handle theme color change
         let colors = {
-            'black': '#555',
+            'black': '#555555',
             'red': '#de5460',
             'blue': '#4185f2',
             'green': '#60b389',
@@ -40,20 +40,35 @@
             'yellow': '#f2c23f'
         }
 
+        // handles changing theme when color is picked and removing it
         let buttons = $('#theme div');
         buttons.mousedown(function() {
-            $(buttons).css('transform', '');
-            $(this).css('transform', 'scale(.5)');
+            let buttonColor = $(this).css('background-color').substr(4).split(')')[0].split(',');
+            let current = [hexToRgb(currentTheme).r, hexToRgb(currentTheme).g, hexToRgb(currentTheme).b];
+    
+            let same = true;
+            for (let i = 0; i < 3; i++) {
+                if (current[i] != buttonColor[i]) {
+                    same = false;
+                }
+            }
 
-            let color = colors[$(this).attr('class')]
-            currentTheme = color;
-            $('.me#vector').css('background-color', color);
-            $('h1').css('color', color);
-            let a = hexToRgb(color);
-            let c = `rgba(${a.r}, ${a.g}, ${a.b}, .1)`;
-            
-            $('body').css('background-color', c);
-            
+            if (same) {
+                $(this).css('transform', 'scale(1)');
+                $('body').css('background', '#ffffff');
+            } else {
+                $(buttons).css('transform', '');
+                $(this).css('transform', 'scale(.5)');
+
+                let color = colors[$(this).attr('class')]
+                currentTheme = color;
+                $('.me#vector').css('background-color', color);
+                $('h1').css('color', color);
+
+                let rgb = hexToRgb(color);
+                let lighter = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, .1)`;
+                $('body').css('background-color', lighter);
+            }
         });
 
         $(window).scroll(function () {
@@ -75,10 +90,10 @@
 
         // sometimes the profile pic and project titles get misaligned. Think it has
         // something to do with loading order inconsistency, but this should be a quick fix
-        let alignmentCheck = setTimeout(() => {
+        let alignmentCheck = setInterval(() => {
             centerDescriptions();
-            // overlay(real, vector);
-        }, 3000);
+            overlay(real, vector);
+        }, 100);
 
         // buttons.mouseleave(function() {
         //     $(this).css('border', '0px dashed white');
@@ -98,6 +113,19 @@
             g: parseInt(result[2], 16),
             b: parseInt(result[3], 16)
         } : null;
+    }
+
+    // function rgbToHex(r, g, b) {
+    //     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    // }
+
+    function rgbToHex(r, g, b) {
+        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+
+    function componentToHex(c) {
+        var hex = c.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
     }
 
     // positions @top on top of @bottom
