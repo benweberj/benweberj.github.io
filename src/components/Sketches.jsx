@@ -4,7 +4,7 @@ import P5Wrapper from 'react-p5-wrapper'
 
 import Text from './Text'
 import Div from './Div'
-import particleMesh from '../particleMesh'
+import particleMesh from '../sketches/particleMesh'
 
 import AnimateHeight from 'react-animate-height'
 // import particleMesh from './particleMesh'

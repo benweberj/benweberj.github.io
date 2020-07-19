@@ -13,7 +13,7 @@ import Programming from './components/Programming'
 import Design from './components/Design'
 import Skills from './components/Skills'
 
-import meshSketch from './particleMesh.js'
+import meshSketch from './sketches/particleMesh.js'
 import { theme } from './styles'
 
 const Root = styled.div`
