@@ -4,6 +4,7 @@ export const GlobalStyles = createGlobalStyle`
   body {
     background: ${props => props.theme.base};
     transition: background .5s ease;
+    padding-bottom: 5vw;
   }
 
   * {
@@ -12,10 +13,6 @@ export const GlobalStyles = createGlobalStyle`
     font-family: 'Open Sans';
     font-size: 1rem;
     box-sizing: border-box;
-  }
-
-  p {
-    font-weight: 200;
   }
 
   .w5 { height: max(5vw, 5vh) }
@@ -36,11 +33,9 @@ const baseStyles = {
   primary: '#60b389',
   accent: '#97cfb3',
 
-  weight: {
-    thin: '300',
-    regular: '400',
-    bold: '700' // or 600, 800
-  }
+  light: '300',
+  regular: '400',
+  bold: '600',
 }
 
 export const theme = {

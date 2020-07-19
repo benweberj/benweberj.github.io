@@ -6,10 +6,8 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
 `
-
-  /* background-image: url('${require(`)}'); */
 const Site = styled.a`
-  background-image: url('/img/${props => props.name}${props => props.theme.mode === 'dark' ? '-w' : '-b'}.png');
+  background-image: url('${props => require('../img/social/' + props.name + (props.theme.mode==='dark' ? '-w' : '-b') + '.png')}');
   background-size: cover;
   width: 30px;
   height: 30px;
@@ -29,7 +27,7 @@ const Site = styled.a`
   }
 `
 
-export default function Media (props) {
+export default function SocialMedia (props) {
   return (
     <Container {...props}>
       <Site name='github' href='' />

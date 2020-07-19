@@ -56,8 +56,8 @@ export default function TwoFace (props) {
 
   return (
     <div {...props}> {/* I really don't like that you have to do all these workarounds to pass styles. WHy doesnt just setting it work in benWeber.js */}
-      <Real id='real' style={picStyles} src='/img/real.png' onClick={showVector}/>
-      <Vector id='vector' style={picStyles} src='/img/vec-t.png' onClick={showReal}/>
+      <Real id='real' style={picStyles} src={require('../img/real.png')} onClick={showVector}/>
+      <Vector id='vector' style={picStyles} src={require('../img/vec-t.png')} onClick={showReal}/>
     </div>
   )
 }

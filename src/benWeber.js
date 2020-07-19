@@ -1,17 +1,18 @@
-import React from 'react'
-// import { makeStyles } from '@material-ui/styles'
-import styled, { createGlobalStyle } from 'styled-components'
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
 import P5Wrapper from 'react-p5-wrapper'
 
 import ThemeToggler from './components/ThemeToggler'
 import TwoFace from './components/TwoFace'
-import Media from './components/Media'
+import SocialMedia from './components/SocialMedia'
 import Sketches from './components/Sketches'
 // import follower from './follower'
 import Text from './components/Text'
+import Div from './components/Div'
 import Programming from './components/Programming'
 import Design from './components/Design'
 import Skills from './components/Skills'
+
 import meshSketch from './particleMesh.js'
 import { theme } from './styles'
 
@@ -39,18 +40,40 @@ const Root = styled.div`
 // TODO: good font color: #2e444e
 
 export default function BenWeber (props) {
+  const { toggleMode, theme } = props
+  const [w, setWidth] = useState(window.innerWidth)
+  const [h, setHeight] = useState(window.innerHeight)
+
+  useEffect(_ => {
+    window.addEventListener('resize', _ => {
+      setWidth(window.innerWidth)
+      setHeight(window.innerHeight)
+    })
+  }, [])
+
+  const small = w < 700
+  const medium = w >=700 && w < 1100
+  const large = w >= 1100
+  
   return (
     <Root>
       
       {/* <P5Wrapper theme={props.theme} sketch={meshSketch}></P5Wrapper> */}
 
-      <ThemeToggler className='themeToggler' toggleMode={props.toggleMode} />
-      <TwoFace className='twoFace' />
-      <Media className='media' />
+      <ThemeToggler className='themeToggler' toggleMode={toggleMode} />
+      <Div center col={!large}>
+        <Div>
+          <TwoFace className='twoFace' />
+          <SocialMedia className='media' />
+        </Div>
+        <Div ml={large && 100} mt={(small || medium) && 30}>
+          <Text center={!large} light type={large ? 'h1' : 'h2'}>Hey I'm Ben Weber</Text>
+          <Text center={!large} light>Lorem ipsum dolor sit amet</Text>
+        </Div>
+      </Div>
 
-      <Text type='h1'>$Heading</Text>
-
-      <Sketches />
+      <Text light type='h2' mt={'2vw'} mb={10}>$Heading</Text>
+      <Sketches theme={theme} />
 
       {/* <Text type='h1' bold>About Me</Text>
       <Text type='p'>
