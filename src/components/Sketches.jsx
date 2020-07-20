@@ -4,6 +4,8 @@ import P5Wrapper from 'react-p5-wrapper'
 
 import Text from './Text'
 import Div from './Div'
+import Input from './Input'
+import Button from './Button'
 import particleMesh from '../sketches/particleMesh'
 
 import AnimateHeight from 'react-animate-height'
@@ -22,93 +24,78 @@ const Root = styled.div`
     }
   }
 `
-// const Sketch = styled.div`
-//   height: 100px;
-//   background: ${props => props.theme.complement};
-//   border-radius: .25rem;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   z-index: 10;
-
-//   &:hover {
-//     div {
-//       transform: scale(1.2);
-//     }
-//   }
-// `
-// const SketchInfo = styled.div`
-//   display: flex;
-//   align-items: flex-end;
-//   margin-left: 0;
-//   opacity: 0;
-//   height: 0;
-//   transition: all .5s ease;
-//   margin-bottom: 1rem;
-//   > * { margin: 0 }
-//   #separator {
-//     margin-left: 15px;
-//   }
-
-//   &.visible {
-//     opacity: 1;
-//     height: 80px;
-//   }
-// `
-// const SketchPreview = styled.div`
-//   width: 100%;
-//   height: 0;
-//   opacity: 0;
-//   /* background: ${props => props.theme.complement}; */
-//   border: 1px dashed ${props => props.theme.complement};
-//   border-radius: .25rem;
-//   transition: .5s ease;
-//   overflow: hidden;
-
-//   .options {
-//     transition: all .5s ease;
-//     height: 0;
-//     background: ${props => props.theme.base}55;
-//     width: 100%;
-//   }
-
-//   &.active {
-//     opacity: 1;
-//     /* height: ${window.innerWidth * .8 * (9/16)}px; */
-//     /* height: 0px; */
-
-//     .options {
-//       height: 40px;
-//     }
-
-//     .liveSketch {
-//       height: 100%;
-//       /* background: red; */
-//     }
-//   }
-// `
 
 const sketchData = [
-  { name: 'Particle Mesh', sketch: particleMesh, icon: 'nodes', description: 'One of my first complex sketches. Nodes attract to the cursor.' },
-  { name: 'Lightning', sketch: null, icon: 'lightning', description: '...' },
-  { name: 'Raining Katakana', sketch: null, icon: 'katakana', description: 'Recreation of the raining code animation from the Matrix' },
-  { name: 'Orbit?', sketch: null, icon: 'orbit', description: '...' },
-  { name: 'Light Speed', sketch: null, icon: 'starfield', description: 'Animation resembling the light-speed effect from Star Wars.' }
+  {
+    name: 'Particle Mesh',
+    sketch: particleMesh,
+    icon: 'nodes',
+    description: 'One of my first complex sketches. Nodes attract to the cursor.' ,
+    options: {
+      particleCount:  100,
+      connectionDist:  200,
+      attraction:  3,
+      attractionDist:  200,
+      repulseMultiplier:  5,
+    }
+  },
+  {
+    name: 'Lightning',
+    sketch: null,
+    icon: 'lightning',
+    description: '...' ,
+    options: [
+
+    ]
+  },
+  {
+    name: 'Raining Katakana',
+    sketch: null,
+    icon: 'katakana',
+    description: 'Recreation of the raining code animation from the Matrix' ,
+    options: [
+
+    ]
+  },
+  {
+    name: 'Orbit?',
+    sketch: null,
+    icon: 'orbit',
+    description: '...' ,
+    options: [
+
+    ]
+  },
+  {
+    name: 'Light Speed',
+    sketch: null,
+    icon: 'starfield',
+    description: 'Animation resembling the light-speed effect from Star Wars.',
+    options: [
+
+    ]
+  }
 ]
 
 export default props => {
   const { theme } = props
-  const [sketch, setSketch] = useState(null)
+  const [sketch, setSketch] = useState(sketchData[0]) // temporary
+  const [open, setOpen] = useState(true) // temporary
+  const [options, showOptions] = useState(true)
+
 
   const handleClick = clicked => {
     if (sketch && sketch.name === clicked.name) {
-      setSketch(null)
+      setOpen(false)
+      setTimeout(_ => setSketch(null), 1000)
     } else {
+      setOpen(true)
       setSketch(clicked)
     }
   }
 
   const suffix = props.theme.mode === 'dark' ? 'b' : 'w'
+  const stickToTop = { position: 'absolute', top: 0, left: 0, width: '100%' }
   return (
     <Root>
       <Div flex>
@@ -123,10 +110,29 @@ export default props => {
         })}
       </Div>
       
-      <AnimateHeight height={sketch ? 'auto' : 0}>
+      <AnimateHeight height={open ? 'auto' : 0} duration={1000}>
         <Text bold accent type='h3' mt={30} mb={10}>{sketch && sketch.name} <Text inline light ml={5}>{sketch && sketch.description}</Text></Text>
-        <Div center w={'100%'} contain rounded bg={theme.complement}>
-          <P5Wrapper sketch={sketch && sketch.sketch} theme={theme} />
+        <Div rounded contain style={{ position: 'relative' }}>
+
+          <AnimateHeight height={options ? 'auto' : 0} style={stickToTop}>
+            <Div flex wrap w={'100%'} p={10} bg={`${theme.base}33`}>
+              {sketch && Object.keys(sketch.options).map(o => (
+                <Div mr={30} align='center'>
+                  <Text inverse light size={15} mr={10}>{o}</Text>
+                  <Input bg={'blue'} placeholder={sketch.options[o]} />
+                </Div>
+              ))}
+              <Button ml='auto' onClick={_ => showOptions(false)}>Apply</Button>
+            </Div>
+          </AnimateHeight>
+
+          <AnimateHeight height={!options ? 'auto' : 0} style={stickToTop}>
+            <Button silent block size={12} mx={'auto'} mt={10} rad={100} onClick={_ => showOptions(true)}>Bring back options</Button>
+          </AnimateHeight>
+
+          <Div center w={'100%'} contain bg={theme.complement}>
+            <P5Wrapper sketch={sketch && sketch.sketch} theme={theme} />
+          </Div>
         </Div>
       </AnimateHeight>
     </Root>

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Text = styled.p(props => ({
-  fontSize: props.type === 'h1' ? 50 : props.type === 'h2' ? 40 : props.type === 'h3' ? 25 : 18,
+  fontSize: props.type === 'h1' ? 50 : props.type === 'h2' ? 40 : props.type === 'h3' ? 25 : props.size && props.size,
 
   margin: props.m && props.m,
   marginLeft: props.ml ? props.ml : props.mx && props.mx,
@@ -17,7 +17,7 @@ const Text = styled.p(props => ({
   paddingBottom: props.pb ? props.pb : props.py && props.py,
 
   fontWeight: props.bold ? props.theme.bold : props.light ? props.theme.light : props.theme.regular,
-  color: props.accent ? props.theme.primary : props.color ? props.color : props.theme.complement,
+  color: props.accent ? props.theme.primary : props.color ? props.color : props.inverse ? props.theme.base : props.theme.complement,
 
   display: props.inline && 'inline !important',
   textAlign: props.center && 'center'

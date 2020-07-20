@@ -68,7 +68,8 @@ export default function BenWeber (props) {
         </Div>
         <Div ml={large && 100} mt={(small || medium) && 30}>
           <Text center={!large} light type={large ? 'h1' : 'h2'}>Hey I'm Ben Weber</Text>
-          <Text center={!large} light>Lorem ipsum dolor sit amet</Text>
+          <Text center={!large} light>Just a little note: the UX of this site should be perfect in every fucking way. It's fine that
+          you're taking your time on it. Be OCD. Make interacting with every aspect of this site smooth and beautiful.</Text>
         </Div>
       </Div>
 

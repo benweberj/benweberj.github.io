@@ -23,7 +23,7 @@ export default p => {
     color= '#fff'
     particles = []
     particleCount = 100
-    connectionDist = 500
+    connectionDist = 200
     attraction = 3
     attractionDist = 200
     repulseMultiplier = 5
@@ -40,14 +40,6 @@ export default p => {
     let mouse = p.createVector(p.mouseX, p.mouseY)
     particles.forEach(particle => {
       particle.update(color)
-      // let mouseDist = particle.pos.dist(mouse)
-      // if (mouseDist < attractionDist) {
-      //   let dir = mouse.copy().sub(particle.pos)
-      //   if (p.mouseIsPressed) {
-      //     dir.mult(-repulseMultiplier)
-      //   }
-      //   particle.applyForce(dir.mult(attraction))
-      // }
 
       particles.forEach(other => {
         if (particle !== other) {
@@ -63,7 +55,7 @@ export default p => {
           }
 
           if (dist < connectionDist) {
-            let stroke = Math.pow(10 / dist, 2);
+            let stroke = Math.pow(15 / dist, 2);
             stroke = p.constrain(stroke, 0, 2);
             p.stroke(color)
             p.strokeWeight(stroke)
@@ -121,9 +113,9 @@ class Particle {
   }
 
   respawn() {
-    let rate = this.p.random(.2, .4)
+    let rate = this.p.random(.2, 1)
     this.pos = this.p.createVector(this.p.random(-100, this.p.width + 100), -100)
     this.vel = this.p.createVector(this.p.random(-rate, rate), this.p.random(0, rate))
-    this.size = this.p.random(1, 10)
+    this.size = this.p.random(2, 7)
   }
 }

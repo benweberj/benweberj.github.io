@@ -20,8 +20,9 @@ const Div = styled.div(props => ({
   justifyContent: props.justify ? props.justify : props.center && 'center',
   alignItems: props.align ? props.align : props.center && 'center',
   flexDirection: props.col && 'column',
+  flexWrap: props.wrap && 'wrap',
 
-  borderRadius: props.rounded ? 5 : props.rad ? props.rad : 0,
+  borderRadius: props.rounded ? props.theme.corners : props.rad ? props.rad : 0,
   width: props.w && props.w,
   height: props.h && props.h,
   background: props.bg && props.bg,

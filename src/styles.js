@@ -36,6 +36,8 @@ const baseStyles = {
   light: '300',
   regular: '400',
   bold: '600',
+  corners: 5,
+  cornersSm: 3,
 }
 
 export const theme = {
