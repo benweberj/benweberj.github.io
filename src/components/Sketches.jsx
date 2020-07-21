@@ -122,12 +122,12 @@ export default props => {
                   <Input bg={'blue'} placeholder={sketch.options[o]} />
                 </Div>
               ))}
-              <Button ml='auto' onClick={_ => showOptions(false)}>Apply</Button>
+              <Button intent='right' inverse ml='auto' onClick={_ => showOptions(false)}>Apply</Button>
             </Div>
           </AnimateHeight>
 
           <AnimateHeight height={!options ? 'auto' : 0} style={stickToTop}>
-            <Button silent block size={12} mx={'auto'} mt={10} rad={100} onClick={_ => showOptions(true)}>Bring back options</Button>
+            <Button intent='up' inverse silent block mx={'auto'} mt={10} size={14} rad={100} onClick={_ => showOptions(true)}>Bring back options</Button>
           </AnimateHeight>
 
           <Div center w={'100%'} contain bg={theme.complement}>

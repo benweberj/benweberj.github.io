@@ -14,7 +14,7 @@ const Site = styled.a`
   border-radius: 50%;
   margin: 0 .5rem;
   transition: all .5s ease;
-  opacity: .8;
+  opacity: .6;
 
   &:after {
     color: #fff;

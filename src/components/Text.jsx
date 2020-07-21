@@ -16,6 +16,13 @@ const Text = styled.p(props => ({
   paddingTop: props.pt ? props.pt : props.py && props.py,
   paddingBottom: props.pb ? props.pb : props.py && props.py,
 
+  width: props.w && props.w,
+  height: props.h && props.h,
+  minWidth: props.minW && props.minW,
+  minHeight: props.minH && props.minH,
+  maxWidth: props.maxW && props.maxW,
+  maxHeight: props.maxH && props.maxH,
+
   fontWeight: props.bold ? props.theme.bold : props.light ? props.theme.light : props.theme.regular,
   color: props.accent ? props.theme.primary : props.color ? props.color : props.inverse ? props.theme.base : props.theme.complement,
 

@@ -68,12 +68,12 @@ export default function BenWeber (props) {
         </Div>
         <Div ml={large && 100} mt={(small || medium) && 30}>
           <Text center={!large} light type={large ? 'h1' : 'h2'}>Hey I'm Ben Weber</Text>
-          <Text center={!large} light>Just a little note: the UX of this site should be perfect in every fucking way. It's fine that
+          <Text maxW={600} center={!large} light>Just a little note: the UX of this site should be perfect in every fucking way. It's fine that
           you're taking your time on it. Be OCD. Make interacting with every aspect of this site smooth and beautiful.</Text>
         </Div>
       </Div>
 
-      <Text light type='h2' mt={'2vw'} mb={10}>$Heading</Text>
+      <Text light type='h2' mt={'2vw'} mb={10}>Some of my p5.js sketches</Text>
       <Sketches theme={theme} />
 
       {/* <Text type='h1' bold>About Me</Text>
