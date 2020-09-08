@@ -37,6 +37,20 @@ const Root = styled.div`
   }
 `
 
+const Omic = styled.div`
+  padding: 50px;
+  /* background: radial-gradient(#192b41ef, #0c1015ef), url('https://wallpaperplay.com/walls/full/0/d/1/62615.jpg'); */
+  background: #5b9bea11;
+  background-size: contain;
+  border-radius: 4px;
+
+  p {
+    font-family: Heebo;
+    /* color: #fff; */
+    /* font-weight: 100; */
+  }
+`
+
 // TODO: good font color: #2e444e
 
 export default function BenWeber (props) {
@@ -67,7 +81,7 @@ export default function BenWeber (props) {
           <SocialMedia className='media' />
         </Div>
         <Div ml={large && 100} mt={(small || medium) && 30}>
-          <Text center={!large} light type={large ? 'h1' : 'h2'}>Hey I'm Ben Weber</Text>
+          <Text center={!large} light type={large ? 'h1' : 'h2'}>Fuck off I'm Ben Wener</Text>
           <Text maxW={600} center={!large} light>Just a little note: the UX of this site should be perfect in every fucking way. It's fine that
           you're taking your time on it. Be OCD. Make interacting with every aspect of this site smooth and beautiful.</Text>
         </Div>
@@ -75,6 +89,22 @@ export default function BenWeber (props) {
 
       <Text light type='h2' mt={'2vw'} mb={10}>Some of my p5.js sketches</Text>
       <Sketches theme={theme} />
+
+      {/* <Text light type='h2' mb={10} mt={30}>What I've done to Learn Web Development</Text> */}
+      <Text light type='h2' mb={10} mt={30}>...</Text>
+      <Omic>
+        <Text type='h3'>I currently work at Omic</Text>
+
+        {/* <Text light >Omic is a genomics analysis startup, working to advance the way healthcare professionals interact with patient data.</Text>
+        <Text light>We supply doctors, biologists, researchers, and coders with a suite of bioinformatics pipelines and machine learning models
+          to uncover patient risk factors.</Text>
+        <Text light>These models have been trained on hundreds of thousands of patients' FASTQ files (text file with you DNA sequences, with quality scores attached)
+         and have already shown to have successful results.</Text>
+        <Text light>Omic is currently putting its full effort towards its C19 initiative, which focuses on building a community of researchers, biologists and coders to
+          build experiments, execute pipelines, run models, and share your results with a team of people who want to end COVID-19 just as much as you do.</Text> */}
+        <Text light>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text> 
+      </Omic>
+      
 
       {/* <Text type='h1' bold>About Me</Text>
       <Text type='p'>

@@ -23,7 +23,7 @@ const Site = styled.a`
   &:hover {
     opacity: 1;
     transform: scale(1.1);
-    animation: ${props => props.theme.mode === 'dark' ? 'pulseLight' : 'pulseDark'} 1s ease;
+    /* animation: ${props => props.theme.mode === 'dark' ? 'pulseLight' : 'pulseDark'} 1s ease; */
   }
 `
 

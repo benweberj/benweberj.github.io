@@ -33,11 +33,25 @@ const Button_ = styled.button(props => ({
   fontWeight: props.theme.light,
   opacity: props.silent && '.3',
   overflow: 'hidden',
+  boxSizing: 'border-box',
 
   '&:hover': {
     // opacity: 1,
     // background: props.theme[props.inverse ? 'base' : 'complement'],
     // color: props.theme[props.inverse ? 'complement' : 'base'],
+  },
+
+  '&:before': {
+    transition: 'all .25s ease',
+    content: '""',
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    width: '100%',
+    height: '100%',
+    background: props.inverse ? props.theme.base : props.theme.complement,
+    transform: 'scaleY(0)', 
+    transformOrigin: 'bottom',
   },
 
   '&:after': {
@@ -49,13 +63,11 @@ const Button_ = styled.button(props => ({
     width: '100%',
     height: '100%',
     backgroundImage: `url(${props.src})`,
-    // background: 'red',
-    // backgroundImage: 'url(https://www.pngfind.com/pngs/m/30-303038_up-arrow-comments-upward-arrow-icon-png-transparent.png)',
     backgroundSize: 'contain',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     transform: 'scale(.7)',
-    filter: 'invert(100%)',
+    filter: props.inverse && props.theme.mode === 'light' &&  'invert(100%)',
   },
 
   '& p': { transition: 'all .25s ease' },
@@ -63,6 +75,7 @@ const Button_ = styled.button(props => ({
   '&:hover': {
     opacity: 1,
     '&:after': { transform: 'translateY(100%) scale(.7)' },
+    '&:before': { transform: 'scaleY(1)' },
     '& p': { transform: 'translateY(100%)' }
   }
 }))
@@ -71,17 +84,17 @@ export default props => {
   const { intent, children } = props
   
   // TODO: for arrows, make your own then conditionally rotate (make sure to keep individual rotation when adding translateY)
-  const src = (i => {
-    switch (i) {
-      case 'up': return 'https://www.pngfind.com/pngs/m/30-303038_up-arrow-comments-upward-arrow-icon-png-transparent.png'
-      case 'down': return 'https://p7.hiclipart.com/preview/402/864/42/arrow-computer-icons-down-arrow.jpg'
-      case 'left': return 'https://p7.hiclipart.com/preview/693/366/397/computer-icons-clip-art-left-arrow.jpg'
-      case 'right': return 'https://www.freeiconspng.com/uploads/right-arrow-icon-12.png'
-      default: return null
-    }
-  })(intent)
+  // const src = (i => {
+  //   switch (i) {
+  //     case 'up': return ''
+  //     case 'down': return ''
+  //     case 'left': return ''
+  //     case 'right': return ''
+  //     default: return null
+  //   }
+  // })(intent)
 
   return (
-    <Button_ {...props} src={src}><p>{children}</p></Button_>
+    <Button_ {...props} src={require(`../img/intents/${intent}.png`)}><p>{children}</p></Button_>
   )
 }

@@ -79,8 +79,8 @@ const sketchData = [
 
 export default props => {
   const { theme } = props
-  const [sketch, setSketch] = useState(sketchData[0]) // temporary
-  const [open, setOpen] = useState(true) // temporary
+  const [sketch, setSketch] = useState(null) // temporary
+  const [open, setOpen] = useState(false) // temporary
   const [options, showOptions] = useState(true)
 
 
