@@ -33,9 +33,9 @@ const baseStyles = {
   primary: '#60b389',
   accent: '#97cfb3',
 
-  light: '300',
-  regular: '400',
-  bold: '600',
+  light: 300,
+  regular: 400,
+  bold: 600,
   corners: 5,
   cornersSm: 3,
 }

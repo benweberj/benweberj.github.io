@@ -18,11 +18,19 @@ export default p => {
   }
 
   p.setup = _ => {
-    canvas = p.createCanvas(p.windowWidth * .8, p.windowHeight * .8)
+    // canvas = p.createCanvas(p.windowWidth * .8, p.windowHeight * .8)
+    canvas = p.createCanvas(p.windowWidth, p.windowHeight)
+    // canvas.style('z-index', -10000)
+    canvas.style('background', 'red')
+    canvas.style('position', 'absolute')
+    canvas.style('top', '0px')
+    canvas.style('left','0px')
+    canvas.style('opacity', '.1')
+    canvas.style('z-index', '-101')
     bg = '#111'
     color= '#fff'
     particles = []
-    particleCount = 100
+    particleCount = 50
     connectionDist = 200
     attraction = 3
     attractionDist = 200
@@ -69,8 +77,10 @@ export default p => {
   p.windowResized = _ => p.resizeCanvas(p.windowWidth * .8, p.windowHeight * .8)
 
   p.myCustomRedrawAccordingToNewPropsHandler = newProps => {
-    bg = newProps.theme.complement
-    color = newProps.theme.base
+    // bg = newProps.theme.complement
+    // color = newProps.theme.base
+    bg = newProps.theme.base
+    color = newProps.theme.complement
   }
 }
 

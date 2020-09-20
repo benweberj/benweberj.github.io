@@ -2,17 +2,19 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Real = styled.img(props => ({
+  cursor: 'pointer',
   position: 'absolute'
 }))
 
 const Vector = styled.img(props => ({
+  cursor: 'pointer',
   background: props.theme.primary,
   position: 'relative',
   top: 0,
   left: 0,
   transition: 'all .5s ease !important',
   '&:hover': {
-    background: props.theme.complement
+    background: props.theme.complement,
   }
 }))
 
@@ -55,7 +57,7 @@ export default function TwoFace (props) {
   }
 
   return (
-    <div {...props}> {/* I really don't like that you have to do all these workarounds to pass styles. WHy doesnt just setting it work in benWeber.js */}
+    <div {...props}>
       <Real id='real' style={picStyles} src={require('../img/real.png')} onClick={showVector}/>
       <Vector id='vector' style={picStyles} src={require('../img/vec-t.png')} onClick={showReal}/>
     </div>
