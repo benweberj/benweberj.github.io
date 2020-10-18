@@ -8,22 +8,23 @@ const Container = styled.div(props => ({
   position: 'fixed',
   display: 'inline-block',
   
-  width: '100%',
-  height: props.closed && 30,
-  maxHeight: props.closed ? 30 : 200,
-  maxWidth: props.closed ? 30 : 300,
+  width: props.closed ? 40 : '100%',
+  height: props.closed && 40,
+  maxHeight: props.closed ? 40 : 200,
+  maxWidth: props.closed ? 40 : 300,
   top: 0,
   left: 0,
 }))
 
 const _Terminal = styled.pre(props => ({
-  // border: '1px solid #5a7896',
+  border: `1px solid ${props.theme.complement}`,
   padding: !props.closed && 10,
   width: '100%',
   height: '100%',
-  display: props.closed ? 'flex' : 'inline-block',
-  alignItems: props.closed &&  'center',
-  justifyContent: props.closed &&  'center',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: props.closed ? 'center' : 'flex-start',
+  justifyContent: 'center',
   
   background: `${props.theme.base}aa`,
   color: props.theme.complement,
@@ -56,23 +57,22 @@ const CloseBtn = styled.button`
 export default props => {
   // const [hovered, setHovered] = useState(false)
   const [closed, setClosed] = useState(false)
-  const [lastText, setLastText] = useState(props.text)
-  const { text, theme, messages } = props
-  const empty = text.length === 0
+  // const [lastText, setLastText] = useState(props.text)
+  const { messages } = props
   // console.log('the innerHTML', closed)
 
-  useEffect(_ => empty && setClosed(true), [])
+  // useEffect(_ => empty && setClosed(true), [])
+  // useEffect(_ => messages.length === 0)
 
   useEffect(_ => {
-    if (text.length >= lastText) setClosed(false)
-    if (!text || text.length === 0) setClosed(true)
-    setLastText(text)
-  }, [text])
+    setClosed(messages.length === 0)
+    // console.log(props.messages.length)
+  })
 
   return (
     <Container closed={closed}>
       <_Terminal>
-        {messages.map(line => line)}
+        {messages.map(line => line.comp)}
       </_Terminal>
       {/* <_Terminal
         dangerouslySetInnerHTML={{ __html: closed ? 'λ' : text }}

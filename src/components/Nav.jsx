@@ -36,7 +36,7 @@ const socialData = [
 
 export default props => {
   const [hovered, setHovered] = useState(false)
-  const { term: { echo, clear }, theme: { mode } } = props
+  const { echo, theme: { mode } } = props
 
   const isHovered = alias => {
     if (!hovered) return { filter: mode === 'light' && 'invert(1)' }
@@ -62,12 +62,9 @@ export default props => {
         <Img
           onMouseEnter={_ => {
             setHovered(s.id)
-            echo(s.hoverMsg)
+            echo(s.hoverMsg, 3000)
           }}
-          onMouseLeave={_ => {
-            setHovered(null)
-            clear()
-          }}
+          onMouseLeave={_ => setHovered(null)}
           style={isHovered(s.id)}
           src={require(`../img/social/${s.id}.png`)}
         />  

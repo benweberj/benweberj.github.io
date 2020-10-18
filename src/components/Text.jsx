@@ -32,6 +32,7 @@ const Text = styled.p(props => ({
   textAlign: props.center && 'center',
   lineHeight: props.lh && props.lh,
   transition: 'all .5s ease',
+  fontFamily: props.code && 'Fira Code, monospace !important',
 
   '& a': {
     fontSize: 'inherit',

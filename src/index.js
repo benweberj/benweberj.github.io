@@ -31,23 +31,17 @@ class App extends React.Component {
    */
   echo = (str, time=6000) => {
     let x = this.state.termMessages
-    x.push(<Line msg={str} time={time} key={str.substring(2, 6) || str.charAt(0)} />)
+    x.push({ id: str, comp: <Line nullify={this.nullifyMsg} msg={str} time={time} key={str.substring(2, 6) || str.charAt(0)} /> })
     this.setState({ messages: x })
+    console.log(x.length)
   }
 
-
-
-  /**
-   * Trims the terminal text until its empty
-   */
-  fadeTerminal = _ => {
-    const { terminal } = this.state
-    for (let i = terminal.length-1; i >= 0; i--) {
-      setTimeout(_ => {
-        // Not 100% sure why you need to reverse the index, but I haven't even looked into it
-        this.setState({ terminal: terminal.substring(0, terminal.length-1-i) })
-      }, 5 * i)
-    }
+  nullifyMsg = msg => {
+    const newMessages = this.state.termMessages.filter(tm =>  {
+      console.log(tm)
+      return tm.id !== msg
+    })
+    this.setState({ termMessages: newMessages })
   }
 
   componentDidMount = _ => {
@@ -59,6 +53,7 @@ class App extends React.Component {
     window.addEventListener('resize', debouncedResize)
   }
 
+
   toggleMode = _ => {
     const { theme: { mode } } = this.state
     let newMode = mode === 'dark' ? 'light' : 'dark'
@@ -67,12 +62,8 @@ class App extends React.Component {
   }
 
   render = _ => {
-    const { w, h, theme, termMMessage } = this.state
+    const { w, h, theme, termMessages } = this.state
 
-    const term = {
-      echo: str => this.echo(str),
-      clear: _ => this.fadeTerminal()
-    }
 
 
 
@@ -91,7 +82,7 @@ class App extends React.Component {
         <ThemeProvider theme={theme}> {/* for styled-components */}
           <GlobalStyles /> {/* for all global css styles */}
           <Terminal messages={termMessages} theme={theme} />
-          <Nav term={term} theme={theme} />
+          <Nav echo={this.echo} theme={theme} />
           <ThemeToggler
             theme={theme}
             toggleMode={this.toggleMode}

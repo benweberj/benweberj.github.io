@@ -30,7 +30,7 @@ const _Div = styled.div(props => ({
   paddingTop: props.pt ? props.pt : props.py && props.py,
   paddingBottom: props.pb ? props.pb : props.py && props.py,
 
-  display: (props.flex || !!props.align || !!props.justify || props.col || props.center || !!props.split) && 'flex',
+  display: (props.flex || !!props.align || !!props.justify || props.col || props.center || !!props.split) ? (props.iflex ? 'inline-flex' : 'flex') : 'block',
   justifyContent: props.center ? 'center' : props.justify === 'center' ? 'center' : props.justify === 'end' ? 'flex-end' : (props.justify === 'between' || props.split) ? 'space-between' : props.justify === 'evenly' ? 'space-evenly' : 'flex-start',
   alignItems: (props.split || props.center) ? 'center' : props.align === 'center' ? 'center' : props.align === 'end' ? 'flex-end' : props.align === 'stretch' ? 'stretch' : 'flex-start',
   flexDirection: `${props.col ? 'column' : 'row'}${props.rev ? '-reverse' : ''}`,
