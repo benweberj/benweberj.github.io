@@ -27,43 +27,60 @@ class App extends React.Component {
    * @param {integer} time - the duration in ms of the delay from cmd -> output
    * @param {string} output - the output of the command, displayed after {time} ms
    */
-  echo = (str, time, output) => {
-    const { terminal } = this.state
-    this.setState({ writing: true })
-    const newline = terminal.length < 1 ? '' : '<br />'
-    str = newline + 'λ ' + str
-    let speed = 20 // duration between character add
-    for (let i = 0; i <= str.length; i++) {
-      setTimeout(_ => {
-        // typing out all the letters
-        this.setState({ terminal: terminal + str.substring(0, i) })
-      }, speed * i)
-      i === str.length && setTimeout(_ => {
-        this.setState({ terminal: this.state.terminal + '<br />......' })
-        // show running dots then print out the output {time} ms later
+  echo = (str, time=null, output=null) => {
+    const { terminal, writing } = this.state
+    if (writing) {
+      this.queue(str, time, output)
+    } else {
+      this.setState({ writing: true })
+      const newline = terminal.length < 1 ? '' : '<br />'
+      str = newline + 'λ ' + str
+      let speed = 20 // duration between character add
+      for (let i = 0; i <= str.length; i++) {
         setTimeout(_ => {
-          this.setState({
-            terminal: this.state.terminal + '<br />' + output,
-            writing: false
-          })
-          // gradually wipe the terminal text
-          setTimeout(this.fadeTerminal, 1 * 1000)
-        }, time)
-      }, speed * i)
+          // typing out all the letters
+          this.setState({ terminal: terminal + str.substring(0, i) })
+        }, speed * i)
+        output && (i === str.length) && setTimeout(_ => {
+          this.setState({ terminal: this.state.terminal + '<br />......' })
+          // show running dots then print out the output {time} ms later
+          setTimeout(_ => {
+            this.setState({
+              terminal: this.state.terminal + '<br />' + output,
+            })
+            // gradually wipe the terminal text
+            setTimeout(this.fadeTerminal, 1 * 1000)
+          }, time)
+        }, speed * i)
+      }
     }
-    // print out the command really fast, then result
   }
 
+
+  queue = (str, time=null, output=null) => {
+    const check = setInterval(_ => {
+      if (this.state.writing) {
+      } else {
+        clearInterval(check)
+        this.echo(str, time, output)
+      }
+    }, 1000)
+  }
+
+  /**
+   * Trims the terminal text until its empty
+   */
   fadeTerminal = _ => {
     console.log('fading')
     const { terminal, writing } = this.state
-    if (!writing) {
-      for (let i = terminal.length-1; i >= 0; i--) {
-        setTimeout(_ => {
-          this.setState({ terminal: terminal.substring(0, terminal.length-1-i) })
-        }, 20 * i)
-        console.log(this.state)
-      }
+    for (let i = terminal.length-1; i >= 0; i--) {
+      setTimeout(_ => {
+        // Not 100% sure why you need to reverse the index, but I haven't even looked into it
+        this.setState({ terminal: terminal.substring(0, terminal.length-1-i) })
+        if (i === 0) {
+          this.setState({ writing: false })
+        }
+      }, 5 * i)
     }
   }
 
@@ -103,12 +120,16 @@ class App extends React.Component {
         <ThemeProvider theme={theme}> {/* for styled-components */}
           <GlobalStyles /> {/* for all global css styles */}
           <Terminal text={terminal} theme={theme} />
-          <Nav />
-          <ThemeToggler theme={theme} toggleMode={this.toggleMode} style={{ transform: 'translate(-50%, 10px)', position: 'fixed', left: '50%', top: 0 }} />
+          <Nav echo={this.echo} theme={theme} />
+          <ThemeToggler
+            theme={theme}
+            toggleMode={this.toggleMode}
+            style={{ transform: 'translate(-50%, 10px)', position: 'fixed', left: '50%', top: 0 }}
+          />
           {/* <BenWeber theme={theme[mode]} toggleMode={this.toggleMode} w={w} h={h} /> giving theme so it can also be used inline */}
-          <h1 style={{ fontSize: 100, color: theme.complement }}>So lets just pretend that we would have a lot of text here</h1>
+          {/* <h1 style={{ fontSize: 100, color: theme.complement }}>So lets just pretend that we would have a lot of text here</h1>
           <h1 style={{ fontSize: 100, color: theme.complement }}>We're gonna do that so we can see how the headers gonna be lookin</h1>
-          <h1 style={{ fontSize: 100, color: theme.complement }}>Will it look well? I have nbo idea bro lets just find ot here in a second</h1>
+          <h1 style={{ fontSize: 100, color: theme.complement }}>Will it look well? I have nbo idea bro lets just find ot here in a second</h1> */}
         </ThemeProvider>
       </MuiThemeProvider>
     )

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useEffect } from 'react'
 import styled from 'styled-components'
 
 import Img from './Img'
@@ -28,24 +29,27 @@ const _Nav = styled.nav(props => ({
 
 export default props => {
   const [hovered, setHovered] = useState(false)
+  const { echo, theme: { mode } } = props
 
   const isHovered = alias => {
-    if (!hovered) return {}
+    if (!hovered) return { filter: mode === 'light' && 'invert(1)' }
     if (hovered === alias) {
       return {
-        transform: 'scale(1.1)'
+        transform: 'scale(1.1)',
+        filter: mode === 'light' && 'invert(1) !important'
       }
     } else {
       return {
-        filter: 'blur(1px)',
+        filter: `blur(1px) ${mode === 'light' ? 'invert(1)' : ''}`,
         transform: 'scale(.9)'
       }
     }
   }
 
+
   return (
     <_Nav>
-      <Img onMouseOver={_ => setHovered('gh')} onMouseOut={_ => setHovered(null)} style={isHovered('gh')} src={require('../img/social/github.png')} />
+      <Img onMouseOver={_ => { setHovered('gh'); echo('lookin at me github, are ya?')} } onMouseOut={_ => setHovered(null)} style={isHovered('gh')} src={require('../img/social/github.png')} />
       <Img onMouseOver={_ => setHovered('li')} onMouseOut={_ => setHovered(null)} style={isHovered('li')} src={require('../img/social/linkedin.png')} />
       <Img onMouseOver={_ => setHovered('mail')} onMouseOut={_ => setHovered(null)} style={isHovered('mail')} src={require('../img/social/mail.png')} />
       <Img onMouseOver={_ => setHovered('res')} onMouseOut={_ => setHovered(null)} style={isHovered('res')} src={require('../img/social/resume.png')} />

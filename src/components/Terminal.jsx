@@ -56,14 +56,17 @@ const CloseBtn = styled.button`
 export default props => {
   const [hovered, setHovered] = useState(false)
   const [closed, setClosed] = useState(false)
+  const [lastText, setLastText] = useState(props.text)
   const { text, theme } = props
-  let empty = !text || text.length < 1
+  let empty = !text || text.length === 0
   // console.log('the innerHTML', closed)
 
   useEffect(_ => empty && setClosed(true), [])
 
   useEffect(_ => {
-    setClosed(empty)
+    if (text.length >= lastText) setClosed(false)
+    if (!text || text.length === 0) setClosed(true)
+    setLastText(text)
   }, [text])
 
   return (

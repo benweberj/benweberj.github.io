@@ -9,10 +9,26 @@ export const GlobalStyles = createGlobalStyle`
     transition: background .5s ease;
     /* padding-bottom: 5vw; */
     height: 100%;
-    background-image: ${props => props.theme.mode === 'dark' ? 'radial-gradient(#1c202fb0, #0f1321), url(https://images.photowall.com/products/58341/foggy-forest-4.jpg?h=699&q=85)' : 'radial-gradient(#fff7, #fffa), url(https://images.photowall.com/products/58341/foggy-forest-4.jpg?h=699&q=85)'};
+    background-image: radial-gradient(#1c202fb0, #0f1321), url(https://images.photowall.com/products/58341/foggy-forest-4.jpg?h=699&q=85);
     background-size: cover;
     background-attachment: fixed;
     font-size: 15px;
+
+    // Pseudo background image for light mode so it can transition
+    &:after {
+      transition: all .25s ease;
+      content: "";
+      opacity: ${props => props.theme.mode === 'dark' && 0};
+      background-image: radial-gradient(#fff7, #fffa), url(https://images.photowall.com/products/58341/foggy-forest-4.jpg?h=699&q=85);
+      background-size: cover;
+      background-attachment: fixed;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
   }
 
   * {
