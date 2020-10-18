@@ -27,9 +27,16 @@ const _Nav = styled.nav(props => ({
   }
 }))
 
+const socialData = [
+  { id: 'github', hoverMsg: 'Look at what I\'ve been codin\.' },
+  { id: 'linkedin', hoverMsg: 'Pop a couple deb dev endorsements my way if you like the site!' },
+  { id: 'mail', hoverMsg: 'Emails the best way to get a hold of me.' },
+  { id: 'resume', hoverMsg: 'Check out my resume.' },
+]
+
 export default props => {
   const [hovered, setHovered] = useState(false)
-  const { echo, theme: { mode } } = props
+  const { term: { echo, clear }, theme: { mode } } = props
 
   const isHovered = alias => {
     if (!hovered) return { filter: mode === 'light' && 'invert(1)' }
@@ -46,13 +53,29 @@ export default props => {
     }
   }
 
+  
+
 
   return (
     <_Nav>
+      {socialData.map((s, i) => (
+        <Img
+          onMouseEnter={_ => {
+            setHovered(s.id)
+            echo(s.hoverMsg)
+          }}
+          onMouseLeave={_ => {
+            setHovered(null)
+            clear()
+          }}
+          style={isHovered(s.id)}
+          src={require(`../img/social/${s.id}.png`)}
+        />  
+      ))}
+      {/* <Img onMouseOver={_ => setHovered('res')} onMouseOut={_ => setHovered(null)} style={isHovered('res')} src={require('../img/social/resume.png')} />
       <Img onMouseOver={_ => { setHovered('gh'); echo('lookin at me github, are ya?')} } onMouseOut={_ => setHovered(null)} style={isHovered('gh')} src={require('../img/social/github.png')} />
       <Img onMouseOver={_ => setHovered('li')} onMouseOut={_ => setHovered(null)} style={isHovered('li')} src={require('../img/social/linkedin.png')} />
-      <Img onMouseOver={_ => setHovered('mail')} onMouseOut={_ => setHovered(null)} style={isHovered('mail')} src={require('../img/social/mail.png')} />
-      <Img onMouseOver={_ => setHovered('res')} onMouseOut={_ => setHovered(null)} style={isHovered('res')} src={require('../img/social/resume.png')} />
+      <Img onMouseOver={_ => setHovered('mail')} onMouseOut={_ => setHovered(null)} style={isHovered('mail')} src={require('../img/social/mail.png')} /> */}
     </_Nav>
   )
 }

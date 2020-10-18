@@ -16,7 +16,7 @@ const Container = styled.div(props => ({
   left: 0,
 }))
 
-const _Terminal = styled.code(props => ({
+const _Terminal = styled.pre(props => ({
   // border: '1px solid #5a7896',
   padding: !props.closed && 10,
   width: '100%',
@@ -54,11 +54,11 @@ const CloseBtn = styled.button`
 `
 
 export default props => {
-  const [hovered, setHovered] = useState(false)
+  // const [hovered, setHovered] = useState(false)
   const [closed, setClosed] = useState(false)
   const [lastText, setLastText] = useState(props.text)
-  const { text, theme } = props
-  let empty = !text || text.length === 0
+  const { text, theme, messages } = props
+  const empty = text.length === 0
   // console.log('the innerHTML', closed)
 
   useEffect(_ => empty && setClosed(true), [])
@@ -71,13 +71,16 @@ export default props => {
 
   return (
     <Container closed={closed}>
-      <_Terminal
+      <_Terminal>
+        {messages.map(line => line)}
+      </_Terminal>
+      {/* <_Terminal
         dangerouslySetInnerHTML={{ __html: closed ? 'λ' : text }}
         closed={closed}
         aboutToClose={hovered}
         onClick={_ => closed && setClosed(false)}
-      />
-      {!closed && (
+      /> */}
+      {/* {!closed && (
         <CloseBtn
           onClick={_ => setClosed(true)}
           onMouseOver={_ => setHovered(true)}
@@ -85,7 +88,7 @@ export default props => {
         >
           <Img inverse={theme.mode === 'dark'} w={6} src={require('../img/close.png')} />
         </CloseBtn>
-      )}
+      )} */}
     </Container>
   )
 }

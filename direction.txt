@@ -1,0 +1,4 @@
+what youre donna do is store each of the echo calls in an array
+the array's size is never gonna shrink, the hiding will be handled by the terminal entry
+
+make a terminal entry component that uses animateheight to hide itself. It should handle writing itself

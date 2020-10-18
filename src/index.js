@@ -9,6 +9,7 @@ import { theme as baseTheme, GlobalStyles } from './styles'
 import ThemeToggler from './components/ThemeToggler'
 import Nav from './components/Nav'
 import Terminal from './components/Terminal'
+import Line from './components/Line'
 
 // import BenWeber from './benWeber'
 
@@ -20,66 +21,31 @@ class App extends React.Component {
     w: window.innerWidth,
     h: window.innerHeight,
     terminal: '',
-    writing: false
+    writing: false,
+    termMessages: [],
   }
+
   /**
    * @param {string} str - the message to be added to the terminal
-   * @param {integer} time - the duration in ms of the delay from cmd -> output
-   * @param {string} output - the output of the command, displayed after {time} ms
+   * @param {integer} time (optional) - if its a status rather than suppl. text, remove after {time}ms
    */
-  echo = (str, time=null, output=null) => {
-    const { terminal, writing } = this.state
-    if (writing) {
-      this.queue(str, time, output)
-    } else {
-      this.setState({ writing: true })
-      const newline = terminal.length < 1 ? '' : '<br />'
-      str = newline + 'λ ' + str
-      let speed = 20 // duration between character add
-      for (let i = 0; i <= str.length; i++) {
-        setTimeout(_ => {
-          // typing out all the letters
-          this.setState({ terminal: terminal + str.substring(0, i) })
-        }, speed * i)
-        output && (i === str.length) && setTimeout(_ => {
-          this.setState({ terminal: this.state.terminal + '<br />......' })
-          // show running dots then print out the output {time} ms later
-          setTimeout(_ => {
-            this.setState({
-              terminal: this.state.terminal + '<br />' + output,
-            })
-            // gradually wipe the terminal text
-            setTimeout(this.fadeTerminal, 1 * 1000)
-          }, time)
-        }, speed * i)
-      }
-    }
+  echo = (str, time=6000) => {
+    let x = this.state.termMessages
+    x.push(<Line msg={str} time={time} key={str.substring(2, 6) || str.charAt(0)} />)
+    this.setState({ messages: x })
   }
 
 
-  queue = (str, time=null, output=null) => {
-    const check = setInterval(_ => {
-      if (this.state.writing) {
-      } else {
-        clearInterval(check)
-        this.echo(str, time, output)
-      }
-    }, 1000)
-  }
 
   /**
    * Trims the terminal text until its empty
    */
   fadeTerminal = _ => {
-    console.log('fading')
-    const { terminal, writing } = this.state
+    const { terminal } = this.state
     for (let i = terminal.length-1; i >= 0; i--) {
       setTimeout(_ => {
         // Not 100% sure why you need to reverse the index, but I haven't even looked into it
         this.setState({ terminal: terminal.substring(0, terminal.length-1-i) })
-        if (i === 0) {
-          this.setState({ writing: false })
-        }
       }, 5 * i)
     }
   }
@@ -97,11 +63,16 @@ class App extends React.Component {
     const { theme: { mode } } = this.state
     let newMode = mode === 'dark' ? 'light' : 'dark'
     this.setState({ mode: newMode, theme: baseTheme[newMode] })
-    this.echo(`switching mode to ${newMode}`, 1000, `now thats ${newMode}!`)
+    this.echo(`switching mode to ${newMode}`, 1000)
   }
 
   render = _ => {
-    const { w, h, theme, terminal } = this.state
+    const { w, h, theme, termMMessage } = this.state
+
+    const term = {
+      echo: str => this.echo(str),
+      clear: _ => this.fadeTerminal()
+    }
 
 
 
@@ -119,8 +90,8 @@ class App extends React.Component {
       <MuiThemeProvider theme={theme}> {/* for MUI localStyles */}
         <ThemeProvider theme={theme}> {/* for styled-components */}
           <GlobalStyles /> {/* for all global css styles */}
-          <Terminal text={terminal} theme={theme} />
-          <Nav echo={this.echo} theme={theme} />
+          <Terminal messages={termMessages} theme={theme} />
+          <Nav term={term} theme={theme} />
           <ThemeToggler
             theme={theme}
             toggleMode={this.toggleMode}
