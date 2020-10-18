@@ -1,132 +1,51 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import P5Wrapper from 'react-p5-wrapper'
+// import P5Wrapper from 'react-p5-wrapper'
 
-import ThemeToggler from './components/ThemeToggler'
-import TwoFace from './components/TwoFace'
-import SocialMedia from './components/SocialMedia'
-import Sketches from './components/Sketches'
-// import follower from './follower'
 import Text from './components/Text'
 import Div from './components/Div'
 import Img from './components/Img'
-import Programming from './components/Programming'
-import Design from './components/Design'
-import Skills from './components/Skills'
+
+import Home from './components/Home'
+import Omic from './components/Omic'
+
 import particleMesh from './sketches/particleMesh'
-
-import meshSketch from './sketches/particleMesh.js'
-import { theme } from './styles'
-
-const Root = styled.div`
-  width: 80vw;
-  margin: auto;
-  
-  canvas { z-index: -1 }
-
-  .themeToggler {
-    margin-top: 1rem
-  }
-
-  .twoFace {
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
-  }
-
-  .media {
-    margin-top: 1rem;
-  }
-`
-
-const Omic = styled.div`
-  padding: 50px;
-  /* background: radial-gradient(#192b41ef, #0c1015ef), url('https://wallpaperplay.com/walls/full/0/d/1/62615.jpg'); */
-  background: #5b9bea11;
-  background-size: contain;
-  border-radius: 4px;
-
-  p {
-    font-family: Heebo;
-    /* color: #fff; */
-    /* font-weight: 100; */
-  }
-`
-
-// TODO: good font color: #2e444e
+// import Sketches from './components/Sketches'
+// import Programming from './components/Programming'
+// import Design from './components/Design'
+// import Skills from './components/Skills'
 
 export default function BenWeber (props) {
-  const [revealed, setRevealed] = useState(false)
-  const [hovered, setHovered] = useState([false, false, false]) // holo, xxx, yyy
   const { toggleMode, theme, w, h } = props
-
-  const textRef = useRef()
-
-  const handleFocus = (card, focused) => {
-    if (card === 'holo') {
-      hovered[0] = focused
-    }
-    if (card === 'xxx') {
-      hovered[1] = focused
-    }
-    if (card === 'yyy') {
-      hovered[2] = focused
-    }
-    setHovered(hovered)
-    console.log(hovered)
-  }
-
-  useEffect(_ => {
-    setTimeout(_ => setRevealed(true), 1000)
-  }, [])
-
-  const small = w < 700
-  const medium = w >=700 && w < 1100
-  const large = w >= 1100
   
   return (
     <>
-      {/* Landing Page */}
-      <Div w='100vw' h='100vh'>
-        <P5Wrapper sketch={particleMesh} theme={theme} />
-        <Text ref={textRef} nowrap light size={60} style={{position: 'absolute', pointerEvents: 'none', opacity: 0 }}>Howdy, I'm Ben Weber</Text>
-        <ThemeToggler theme={theme} toggleMode={toggleMode} style={{ marginTop: 20 }} />
-        <Div center mt={'20vh'}>
-          <TwoFace />
 
-          <Div style={{ opacity: revealed ? 1 : 0, transition: 'all 1s ease, opacity 2s ease' }} ml={revealed ? 50 : 0} w={revealed ? textRef.current.offsetWidth : 0}>
-            <Text nowrap light size={60}>Howdy, I'm Ben Weber</Text>
-            <Div split>
-              <Text type='h3'>
-                <Text inline nowrap light o={.5}>Lead Web Developer @ </Text>
-                <Text inline nowrap light href={'https://www.omic.ai'}>Omic MD</Text>
-              </Text>
-              <SocialMedia />
-            </Div>
-          </Div>
-        </Div>
+      {/* <Div w='100vw' minH='100vh' debug>
+        <Home {...props} />
       </Div>
 
-      <Div center col p={100} cover bg='radial-gradient(#192b41f5, #0c1015f5), url(https://us.123rf.com/450wm/nicholashan/nicholashan1709/nicholashan170900485/87166578-de-3d-weergave-van-golf-deeltjes-achtergrond-3d-verlichte-digitale-golf-van-gloeiende-deeltjes.jpg?ver=6);' w='100vw' h='100vh'>
-        <Text bold type='h2' mb={'5vw'}>I currently work at Omic as the Lead Web Developer.</Text>
+      <Div w='100vw' minH='100vh'>
+        <Omic {...props} />
+      </Div> */}
+
+      {/* Omic */}
+      {/* <Div split w='100vw' h='100vh' cover bg='radial-gradient(#192b41f5, #0c1015f5), url(https://us.123rf.com/450wm/nicholashan/nicholashan1709/nicholashan170900485/87166578-de-3d-weergave-van-golf-deeltjes-achtergrond-3d-verlichte-digitale-golf-van-gloeiende-deeltjes.jpg?ver=6)' >
+        <Div center col w='50%' h='100%' p={50}>
+          <Text bold type='h2' lh={1.2} mb={'1vh'}>I currently work at Omic as the Lead Web Developer.</Text>
+          <Text light lh={2}>
+            Omic is like lorem ipsum, in that lorem ipsum dolor sit amet. Let me rephrase that, consecutar amet lorem dolor
+            amet mcSit mim a lor alema ipsum lorem.
+          </Text>
+        </Div> */}
         {/* <Text light type='h3' lh={2}>Omic is [description of omic] Lorem adslkjfsdaklfjkdjfldsdjfklds fdjklfdkfjdksfjd  djdjfdjfdj djdjd fdjkfdkjf dkfjklasfkldskljf lkfkljadsfkjldskfld fdasfjdjfdsjfjdskfdsjf kjdsfjdkfd  dkkdkdkdkd </Text> */}
-        <Div justify='between'>
-          <Div glass p={30} onMouseEnter={_ => handleFocus('holo', true)} onMouseLeave={_ => handleFocus('holo', false)}>
+        {/* <Div w='50%' h='100%' p={50}>
+          <Div glass p={30} onMouseEnter={_ => setHovered(true)} onMouseLeave={_ => setHovered(false)}>
             <Text lh={2} bold type='h3'>Holo UI</Text>
-            <Text lh={2} light>Holo UI is the UI scheme I created for Omic. Its consists of low-opacity, light-blue backgrounds with a light blue border <Text inline accent={hovered[0]}>on focus</Text>.</Text>
-          </Div>
-
-          <Div glass p={30} mx={10} onMouseEnter={_ => handleFocus('xxx', true)} onMouseLeave={_ => handleFocus('xxx', false)}>
-            <Text lh={2} bold type='h3'>Holo UI</Text>
-            <Text lh={2} light>Holo UI is the UI scheme I created for Omic. Its consists of low-opacity, light-blue backgrounds with a light blue border <Text inline accent={hovered[1]}>on focus</Text>.</Text>
-          </Div>
-{/* WHY TF THIS AINT WORKIN? */}
-          <Div glass p={30} onMouseEnter={_ => handleFocus('yyy', true)} onMouseLeave={_ => handleFocus('yyy', false)}>
-            <Text lh={2} bold type='h3'>Holo UI</Text>
-            <Text lh={2} light>Holo UI is the UI scheme I created for Omic. Its consists of low-opacity, light-blue backgrounds with a light blue border <Text inline style={{ color: hovered[2] && 'red !important' }}accent={hovered[2]}>on focus</Text>.</Text>
+            <Text lh={2} light>Holo UI is the UI scheme I created for Omic. Its consists of low-opacity, light-blue backgrounds with a light blue border <Text inline accent={hovered}>on focus</Text>.</Text>
           </Div>
         </Div>
-      </Div>
+      </Div> */}
 
       {/* <> */}
     </>

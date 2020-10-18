@@ -21,11 +21,10 @@ export default p => {
     // canvas = p.createCanvas(p.windowWidth * .8, p.windowHeight * .8)
     canvas = p.createCanvas(p.windowWidth, p.windowHeight)
     // canvas.style('z-index', -10000)
-    canvas.style('background', 'red')
     canvas.style('position', 'absolute')
     canvas.style('top', '0px')
     canvas.style('left','0px')
-    canvas.style('opacity', '.1')
+    canvas.style('opacity', '.3')
     canvas.style('z-index', '-101')
     bg = '#111'
     color= '#fff'

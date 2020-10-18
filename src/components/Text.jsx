@@ -31,6 +31,7 @@ const Text = styled.p(props => ({
   display: props.inline && 'inline !important',
   textAlign: props.center && 'center',
   lineHeight: props.lh && props.lh,
+  transition: 'all .5s ease',
 
   '& a': {
     fontSize: 'inherit',

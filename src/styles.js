@@ -1,29 +1,36 @@
 import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyles = createGlobalStyle`
+  html {
+    height: 100%;
+  }
   body {
     background: ${props => props.theme.base};
     transition: background .5s ease;
-    padding-bottom: 5vw;
+    /* padding-bottom: 5vw; */
+    height: 100%;
+    background-image: ${props => props.theme.mode === 'dark' ? 'radial-gradient(#1c202fb0, #0f1321), url(https://images.photowall.com/products/58341/foggy-forest-4.jpg?h=699&q=85)' : 'radial-gradient(#fff7, #fffa), url(https://images.photowall.com/products/58341/foggy-forest-4.jpg?h=699&q=85)'};
+    background-size: cover;
+    background-attachment: fixed;
+    font-size: 15px;
   }
 
   * {
     margin: 0;
     padding: 0;
-    font-family: 'Open Sans';
-    font-size: 1rem;
+    font-family: 'Open Sans', sans-serif;
     box-sizing: border-box;
   }
 
   .w5 { height: max(5vw, 5vh) }
   .w10 { height: max(10vw, 10vh) }
 
-  @keyframes pulseLight {
+  @keyframes pulsedark {
     0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, .15) }
     100% { box-shadow: 0 0 0 60px rgba(255, 255, 255, 0) }
   }
 
-  @keyframes pulseDark {
+  @keyframes pulselight {
     0% { box-shadow: 0 0 0 0 rgba(0, 0, 0, .05) }
     100% { box-shadow: 0 0 0 60px rgba(0, 0, 0, 0) }
   }
@@ -32,6 +39,9 @@ export const GlobalStyles = createGlobalStyle`
 const baseStyles = {
   primary: '#60b389',
   accent: '#97cfb3',
+
+  darkColor: '#111111',
+  lightColor: '#ffffff',
 
   light: 300,
   regular: 400,

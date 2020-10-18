@@ -22,7 +22,9 @@ const Img = styled.img(props => ({
   maxWidth: props.maxW && props.maxW,
   maxHeight: props.maxH && props.maxH,
 
-  opacity: props.disabled && .4, 
+  opacity: props.disabled && .4,
+  display: props.block && 'block',
+  filter: props.inverse && 'invert(1)',
 }))
 
 export default props => <Img src={props.src} {...props} />

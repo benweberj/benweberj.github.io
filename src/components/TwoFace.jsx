@@ -57,7 +57,7 @@ export default function TwoFace (props) {
   }
 
   return (
-    <div {...props}>
+    <div>
       <Real id='real' style={picStyles} src={require('../img/real.png')} onClick={showVector}/>
       <Vector id='vector' style={picStyles} src={require('../img/vec-t.png')} onClick={showReal}/>
     </div>

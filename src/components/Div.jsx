@@ -37,8 +37,10 @@ const _Div = styled.div(props => ({
   flexWrap: props.wrap && 'wrap',
 
   borderRadius: props.rounded ? props.theme.corners : props.rad ? props.rad : props.circle ? 99999 : props.glass ? 6 : 0,
-  width: props.w && props.w,
-  height: props.h && props.h,
+  width: props.full ? '100%' : props.w && props.w,
+  height: props.full ? '100%' : props.h && props.h,
+  minWidth: props.minW && props.minW,
+  minHeight: props.minH && props.minH,
   maxWidth: props.maxW && props.maxW,
   maxHeight: props.maxH && props.maxH,
   background: props.glass ? '#5b9bea11' : props.bg && props.bg,
@@ -47,16 +49,13 @@ const _Div = styled.div(props => ({
   pointerEvents: props.disabled && 'none',
   opacity: props.o ? `${props.o} !important` : props.disabled && .4, 
   cursor: props.pointer && 'pointer',
+  transform: props.scale && `scale(${props.scale})`,
   
-  border: props.debug ? '1px solid red' : props.glass && '1px solid #0000',
+  border: props.glass && '1px solid #0000',
   '&:hover': {
     background: props.glass && '#20283157',
     borderColor: '#5b9bea',
   },
-  
-  '& > *': {
-    border: props.debug && '1px dashed pink',
-  }
 }))
 
 export default React.forwardRef((props, ref) => <_Div ref={ref} {...props}>{props.children}</_Div>)
