@@ -27,12 +27,12 @@ const Text = styled.p(props => ({
   fontWeight: props.bold ? props.theme.bold : props.light ? props.theme.light : props.regular ? props.theme.regular : props.inline ? 'inherit' : props.theme.regular,
   color: props.accent ? props.theme.primary : props.color ? props.color : props.inverse ? props.theme.base : props.theme.complement,
   opacity: props.o ? props.o : 1,
-
+  fontStyle: props.italic && 'italic',
   display: props.inline && 'inline !important',
   textAlign: props.center && 'center',
   lineHeight: props.lh && props.lh,
   transition: 'all .5s ease',
-  fontFamily: props.code && 'Fira Code, monospace !important',
+  fontFamily: props.code ? 'Fira Code, monospace' : props.inline && 'inherit',
 
   '& a': {
     fontSize: 'inherit',

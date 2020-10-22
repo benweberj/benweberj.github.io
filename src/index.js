@@ -14,7 +14,7 @@ import Line from './components/Line'
 // import BenWeber from './benWeber'
 
 // Scrollbar.init(document.querySelector('#smooth-scrollin'))
-
+process.on('uncaughtException', err => {})
 class App extends React.Component {
   state = {
     theme: baseTheme.dark,
@@ -31,16 +31,17 @@ class App extends React.Component {
    */
   echo = (str, time=6000) => {
     let x = this.state.termMessages
-    x.push({ id: str, comp: <Line nullify={this.nullifyMsg} msg={str} time={time} key={str.substring(2, 6) || str.charAt(0)} /> })
+    const id = Math.random().toFixed(20)
+    x.push({ id , comp: <Line nullify={this.nullifyMsg} msg={str} time={time} id={id} /> })
     this.setState({ messages: x })
-    console.log(x.length)
   }
 
-  nullifyMsg = msg => {
-    const newMessages = this.state.termMessages.filter(tm =>  {
-      console.log(tm)
-      return tm.id !== msg
-    })
+  nullifyMsg = id => {
+    const { termMessages } = this.state
+    const newMessages = []
+    for (let i = 0; i < termMessages.length; i++) {
+      if (termMessages[i].id != id) newMessages.push(termMessages[i])
+    }
     this.setState({ termMessages: newMessages })
   }
 
@@ -61,8 +62,13 @@ class App extends React.Component {
     this.echo(`switching mode to ${newMode}`, 1000)
   }
 
+  componentDidUpdate = _ => {
+    // console.log('from index', this.state.termMessages)
+  }
+
   render = _ => {
     const { w, h, theme, termMessages } = this.state
+    // console.log(termMessages)
 
 
 

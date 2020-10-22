@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import AnimateHeight from 'react-animate-height'
 
@@ -9,26 +9,21 @@ export default props => {
   const [expired, setExpired] = useState(false)
   const [wiped, setWiped] = useState(false)
   const [text, setText] = useState('')
-  const { time, msg, nullify } = props
+  const { time, msg, nullify, id } = props
 
   const writeSpeed = 20
-  const delSpeed = 5
-
-  /**
-   * @TODO
-   * need to give each message an id, otherwise, nullufying a duplicate message will override all of them
-   */
+  const delSpeed = 10
 
   const writeText = _ => {
     const deleteTime = msg.length * delSpeed
     setTimeout(_ => setExpired(true), time)
     setTimeout(_ => {
       setWiped(true)
-      nullify(msg)
-    }, time + deleteTime)
+      nullify(id)
+    }, time + deleteTime + 100)
 
     for (let i = 0; i <= msg.length; i++) {
-      const timer = setTimeout(async _ => {
+      const timer = setTimeout(_ => {
         // typing out all the letters
         setText(msg.substring(0, i))
       }, writeSpeed * i)

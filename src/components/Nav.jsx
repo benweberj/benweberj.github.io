@@ -60,6 +60,7 @@ export default props => {
     <_Nav>
       {socialData.map((s, i) => (
         <Img
+          key={`social-${i}`}
           onMouseEnter={_ => {
             setHovered(s.id)
             echo(s.hoverMsg, 3000)
